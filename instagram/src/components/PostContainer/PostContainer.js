@@ -42,7 +42,11 @@ PostContainer.propTypes = {
       username: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
+};
+
+PostContainer.defaultProps = {
+  comments: [],
 };
 
 export default PostContainer;
