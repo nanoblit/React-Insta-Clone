@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from 'styled-components';
 import { black } from './variables';
 
 export const defaultText = css`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 `;
 
 const GlobalStyles = createGlobalStyle`

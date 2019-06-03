@@ -3,10 +3,11 @@ import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostContainer from './components/PostContainer/PostContainer';
 import GlobalStyles from './styles/default';
+import { AppDiv } from './styles/App';
 
 function App() {
   return (
-    <div>
+    <AppDiv>
       <GlobalStyles />
       <SearchBar />
       {dummyData.map(({
@@ -22,7 +23,7 @@ function App() {
           comments={comments}
         />
       ))}
-    </div>
+    </AppDiv>
   );
 }
 

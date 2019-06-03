@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CommentSection from '../CommentSection/CommentSection';
 import {
-  Post, Header, Thumbnail, Username, PostImage,
+  Post,
+  Header,
+  Thumbnail,
+  Username,
+  PostImage,
+  Likes,
+  Timestamp,
+  CommentsDiv,
 } from '../../styles/PostContainer';
 
 function PostContainer({
@@ -15,9 +22,11 @@ function PostContainer({
         <Username>{username}</Username>
       </Header>
       <PostImage src={imageUrl} alt="an image" />
-      <span>{likes} likes</span>
-      <CommentSection comments={comments} />
-      <span>{timestamp}</span>
+      <CommentsDiv>
+        <Likes>{likes} likes</Likes>
+        <CommentSection comments={comments} />
+        <Timestamp>{timestamp}</Timestamp>
+      </CommentsDiv>
     </Post>
   );
 }

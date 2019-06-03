@@ -1,7 +1,12 @@
 import React from 'react';
+import { Search } from '../../styles/SerachBar';
 
 function SearchBar() {
-  return <div><input type="text" /></div>;
+  return (
+    <div>
+      <Search placeholder="Search" type="text" />
+    </div>
+  );
 }
 
 export default SearchBar;

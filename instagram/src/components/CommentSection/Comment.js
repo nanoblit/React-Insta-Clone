@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CommentText, Name } from '../../styles/Comment';
 
 function Comment({ username, text }) {
   return (
-    <p>
-      <span>{username}</span>
+    <CommentText>
+      <Name>{username}</Name>
       {text}
-    </p>
+    </CommentText>
   );
 }
 
