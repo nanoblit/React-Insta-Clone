@@ -1,30 +1,34 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   env: {
     browser: true,
-    es6: true
+    es6: true,
   },
-  extends: "airbnb",
+  extends: 'airbnb',
   globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: 'module',
   },
-  plugins: ["react", "babel"],
+  plugins: ['react', 'babel'],
   rules: {
-    "react/jsx-filename-extension": 0,
-    "linebreak-style": 0,
-    "no-invalid-this": 0,
-    "babel/no-invalid-this": 1,
-    "arrow-parens": 0,
-    "no-debugger": 1,
-    "jsx-a11y/no-noninteractive-element-interactions": 0,
-    "jsx-a11y/click-events-have-key-events": 0
-  }
+    'react/jsx-filename-extension': 0,
+    'linebreak-style': 0,
+    'no-invalid-this': 0,
+    'babel/no-invalid-this': 1,
+    'arrow-parens': 0,
+    'no-debugger': 1,
+    'react/jsx-one-expression-per-line': 0,
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/img-redundant-alt': 0,
+    'react/no-array-index-key': 0,
+    'import/prefer-default-export': 0
+  },
 };
