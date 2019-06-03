@@ -9,7 +9,7 @@ export const Search = styled.input`
   background-color: ${lightGray};
   border: 0.1rem solid ${gray};
   border-radius: 0.3rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   padding: 0.2rem 0;
 
   ::placeholder {
