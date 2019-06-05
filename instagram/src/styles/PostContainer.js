@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { defaultText } from './default';
 import { gray, darkGray } from './variables';
 
@@ -30,11 +31,21 @@ export const PostImage = styled.img`
   width: 100%;
 `;
 
+export const LikesDiv = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
+export const HeartIcon = styled(FontAwesomeIcon)`
+  color: ${({ liked }) => (liked ? 'red' : 'black')};
+  margin-right: 1rem;
+`;
+
 export const Likes = styled.span`
   ${defaultText}
   display: inline-block;
   font-weight: bold;
-  margin-bottom: 1rem;
 `;
 
 export const Timestamp = styled.span`
