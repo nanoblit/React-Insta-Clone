@@ -31,11 +31,13 @@ PostsPage.propTypes = {
       likes: PropTypes.number.isRequired,
       timestamp: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
+      newCommentText: PropTypes.string.isRequired,
       comments: PropTypes.arrayOf(
         PropTypes.shape({
           username: PropTypes.string.isRequired,
           text: PropTypes.string.isRequired,
           id: PropTypes.string.isRequired,
+          liked: PropTypes.bool.isRequired,
         }),
       ),
     }),

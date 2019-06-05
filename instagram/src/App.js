@@ -8,7 +8,7 @@ import withAuthenticate from './components/authentication/withAuthenticate';
 import GlobalStyles from './styles/default';
 import { AppDiv } from './styles/App';
 
-const ComponentFromWithAuthenticate = withAuthenticate(PostsPage);
+const ComponentFromWithAuthenticate = withAuthenticate(PostsPage)(LoginPage);
 
 class App extends React.Component {
   state = {
@@ -23,15 +23,18 @@ class App extends React.Component {
       const changedData = data;
       changedData.isShown = true;
       changedData.id = uuid();
+      changedData.newCommentText = '';
       for (const comment of changedData.comments) {
         const changedComment = comment;
         changedComment.id = uuid();
+        changedComment.liked = false;
       }
       return changedData;
     });
     this.setState({ posts: dummyDataWithIsShown });
   }
 
+  // SEARCH BAR CALLBACKS
   setSearch = e => {
     e.persist();
     this.setState(prevState => ({
@@ -44,7 +47,7 @@ class App extends React.Component {
     }));
   };
 
-  authed = () => localStorage.getItem('auth');
+  // LOGIN PAGE CALLBACKS
 
   onLoginDataSubmit = e => {
     e.preventDefault();
@@ -61,6 +64,47 @@ class App extends React.Component {
     });
   };
 
+  // POST CONTAINER CALLBACKS
+  addNewComment = (e, id) => {
+    e.preventDefault();
+    const newComment = {
+      username: 'User',
+      text: this.state.newCommentText,
+      id: uuid(),
+    };
+    this.setState(prevState => ({
+      comments: [...prevState.comments, newComment],
+      newCommentText: '',
+    }));
+  };
+
+  changeNewComment = (e, id) => {
+    let newPosts;
+    Object.assign(newPosts, this.state.posts);
+
+    newPosts = this.state.posts.map(post => {
+      if (post.id === id) {
+        const newPost = post;
+        newPost.newCommentText = e.target.value;
+        return newPost;
+      }
+      return post;
+    });
+
+    this.setState({ newCommentText: e.target.value });
+  };
+
+  likePost = id => {
+    this.setState(prevState => {
+      const newLiked = !prevState.liked;
+      const newLikes = newLiked ? prevState.likes + 1 : prevState.likes - 1;
+      return {
+        liked: newLiked,
+        likes: newLikes,
+      };
+    });
+  };
+
   render() {
     const {
       posts, searchText, username, password,
@@ -69,16 +113,13 @@ class App extends React.Component {
       <AppDiv>
         <GlobalStyles />
         <SearchBar searchText={searchText} setSearch={this.setSearch} />
-        {this.authed() ? (
-          <ComponentFromWithAuthenticate posts={posts} />
-        ) : (
-          <LoginPage
-            onSubmit={this.onLoginDataSubmit}
-            username={username}
-            password={password}
-            onChange={this.onChange}
-          />
-        )}
+        <ComponentFromWithAuthenticate
+          posts={posts}
+          onSubmit={this.onLoginDataSubmit}
+          username={username}
+          password={password}
+          onChange={this.onChange}
+        />
       </AppDiv>
     );
   }

@@ -18,6 +18,7 @@ CommentSection.propTypes = {
       username: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
+      liked: PropTypes.bool.isRequired,
     }),
   ).isRequired,
 };
