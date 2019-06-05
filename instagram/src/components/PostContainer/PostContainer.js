@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import CommentSection from '../CommentSection/CommentSection';
 import {
@@ -28,6 +29,7 @@ class PostContainer extends React.Component {
     const newComment = {
       username: 'User',
       text: this.state.newCommentText,
+      id: uuid(),
     };
     this.setState(prevState => ({
       comments: [...prevState.comments, newComment],

@@ -1,4 +1,5 @@
 import React from 'react';
+import uuid from 'uuid';
 import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostsPage from './components/PostContainer/PostsPage';
@@ -21,6 +22,11 @@ class App extends React.Component {
     const dummyDataWithIsShown = dummyData.map(data => {
       const changedData = data;
       changedData.isShown = true;
+      changedData.id = uuid();
+      for (const comment of changedData.comments) {
+        const changedComment = comment;
+        changedComment.id = uuid();
+      }
       return changedData;
     });
     this.setState({ posts: dummyDataWithIsShown });
@@ -38,7 +44,7 @@ class App extends React.Component {
     }));
   };
 
-  authed = () => localStorage.getItem('auth') === 'User';
+  authed = () => localStorage.getItem('auth');
 
   onLoginDataSubmit = e => {
     e.preventDefault();

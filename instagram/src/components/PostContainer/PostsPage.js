@@ -7,10 +7,10 @@ const PostsPage = ({ posts }) => (
     {posts
       .filter(({ isShown }) => isShown)
       .map(({
-        username, thumbnailUrl, imageUrl, likes, timestamp, comments,
-      }, idx) => (
+        username, thumbnailUrl, imageUrl, likes, timestamp, comments, id,
+      }) => (
         <PostContainer
-          key={idx}
+          key={id}
           username={username}
           thumbnailUrl={thumbnailUrl}
           imageUrl={imageUrl}
@@ -23,19 +23,23 @@ const PostsPage = ({ posts }) => (
 );
 
 PostsPage.propTypes = {
-  posts: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    thumbnailUrl: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
-    likes: PropTypes.number.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    comments: PropTypes.arrayOf(
-      PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-      }),
-    ),
-  }),
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      thumbnailUrl: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string.isRequired,
+      likes: PropTypes.number.isRequired,
+      timestamp: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      comments: PropTypes.arrayOf(
+        PropTypes.shape({
+          username: PropTypes.string.isRequired,
+          text: PropTypes.string.isRequired,
+          id: PropTypes.string.isRequired,
+        }),
+      ),
+    }),
+  ),
 };
 
 PostsPage.defaultProps = {
