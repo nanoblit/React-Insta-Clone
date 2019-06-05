@@ -1,9 +1,12 @@
 import React from 'react';
 import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
-import PostContainer from './components/PostContainer/PostContainer';
+import PostsPage from './components/PostContainer/PostsPage';
+import withAuthenticate from './components/authentication/withAuthenticate';
 import GlobalStyles from './styles/default';
 import { AppDiv } from './styles/App';
+
+const ComponentFromWithAuthenticate = withAuthenticate(PostsPage);
 
 class App extends React.Component {
   state = {
@@ -38,19 +41,7 @@ class App extends React.Component {
       <AppDiv>
         <GlobalStyles />
         <SearchBar searchText={searchText} setSearch={this.setSearch} />
-        {posts.filter(({ isShown }) => isShown).map(({
-          username, thumbnailUrl, imageUrl, likes, timestamp, comments,
-        }, idx) => (
-          <PostContainer
-            key={idx}
-            username={username}
-            thumbnailUrl={thumbnailUrl}
-            imageUrl={imageUrl}
-            likes={likes}
-            timestamp={timestamp}
-            comments={comments}
-          />
-        ))}
+        <ComponentFromWithAuthenticate posts={posts} />
       </AppDiv>
     );
   }
