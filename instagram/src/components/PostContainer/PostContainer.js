@@ -17,48 +17,21 @@ import {
 } from '../../styles/PostContainer';
 
 class PostContainer extends React.Component {
-  state = {
-    comments: this.props.comments,
-    newCommentText: '',
-    likes: this.props.likes,
-    liked: false,
-  };
-
-  addNewComment = e => {
-    e.preventDefault();
-    const newComment = {
-      username: 'User',
-      text: this.state.newCommentText,
-      id: uuid(),
-    };
-    this.setState(prevState => ({
-      comments: [...prevState.comments, newComment],
-      newCommentText: '',
-    }));
-  };
-
-  changeNewComment = e => {
-    this.setState({ newCommentText: e.target.value });
-  };
-
-  likePost = () => {
-    this.setState(prevState => {
-      const newLiked = !prevState.liked;
-      const newLikes = newLiked ? prevState.likes + 1 : prevState.likes - 1;
-      return {
-        liked: newLiked,
-        likes: newLikes,
-      };
-    });
-  };
-
   render() {
     const {
-      username, thumbnailUrl, imageUrl, timestamp,
+      username,
+      thumbnailUrl,
+      imageUrl,
+      timestamp,
+      comments,
+      newCommentText,
+      likes,
+      liked,
+      addNewComment,
+      changeNewComment,
+      likePost,
+      id,
     } = this.props;
-    const {
-      comments, newCommentText, likes, liked,
-    } = this.state;
     return (
       <Post>
         <Header>
@@ -68,14 +41,19 @@ class PostContainer extends React.Component {
         <PostImage src={imageUrl} alt="an image" />
         <CommentsDiv>
           <LikesDiv>
-            <HeartIcon liked={liked ? 1 : 0} onClick={this.likePost} icon={faHeart} size="2x" />
+            <HeartIcon
+              liked={liked ? 1 : 0}
+              onClick={() => likePost(id)}
+              icon={faHeart}
+              size="2x"
+            />
             <Likes>{likes} likes</Likes>
           </LikesDiv>
           <CommentSection comments={comments} />
           <Timestamp>{timestamp}</Timestamp>
         </CommentsDiv>
-        <form onSubmit={this.addNewComment}>
-          <input value={newCommentText} onChange={this.changeNewComment} />
+        <form onSubmit={e => addNewComment(e, id)}>
+          <input value={newCommentText} onChange={e => changeNewComment(e, id)} />
         </form>
       </Post>
     );
@@ -87,15 +65,19 @@ PostContainer.propTypes = {
   thumbnailUrl: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
   likes: PropTypes.number.isRequired,
+  liked: PropTypes.bool.isRequired,
   timestamp: PropTypes.string.isRequired,
   newCommentText: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   comments: PropTypes.arrayOf(
     PropTypes.shape({
       username: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
-      liked: PropTypes.bool.isRequired,
     }),
   ),
+  addNewComment: PropTypes.func.isRequired,
+  changeNewComment: PropTypes.func.isRequired,
+  likePost: PropTypes.func.isRequired,
 };
 
 PostContainer.defaultProps = {

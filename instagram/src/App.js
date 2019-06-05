@@ -24,10 +24,10 @@ class App extends React.Component {
       changedData.isShown = true;
       changedData.id = uuid();
       changedData.newCommentText = '';
+      changedData.liked = false;
       for (const comment of changedData.comments) {
         const changedComment = comment;
         changedComment.id = uuid();
-        changedComment.liked = false;
       }
       return changedData;
     });
@@ -67,40 +67,58 @@ class App extends React.Component {
   // POST CONTAINER CALLBACKS
   addNewComment = (e, id) => {
     e.preventDefault();
+
+    const { posts } = this.state;
+    const { newCommentText } = posts.find(post => post.id === id);
+
     const newComment = {
       username: 'User',
-      text: this.state.newCommentText,
+      text: newCommentText,
       id: uuid(),
     };
+
     this.setState(prevState => ({
-      comments: [...prevState.comments, newComment],
-      newCommentText: '',
+      posts: prevState.posts.map(post => {
+        if (post.id === id) {
+          const newPost = post;
+          newPost.newCommentText = '';
+          newPost.comments.push(newComment);
+          return newPost;
+        }
+        return post;
+      }),
     }));
   };
 
   changeNewComment = (e, id) => {
-    let newPosts;
-    Object.assign(newPosts, this.state.posts);
-
-    newPosts = this.state.posts.map(post => {
-      if (post.id === id) {
-        const newPost = post;
-        newPost.newCommentText = e.target.value;
-        return newPost;
-      }
-      return post;
-    });
-
-    this.setState({ newCommentText: e.target.value });
+    e.persist();
+    this.setState(prevState => ({
+      posts: prevState.posts.map(post => {
+        if (post.id === id) {
+          const newPost = post;
+          newPost.newCommentText = e.target.value;
+          return newPost;
+        }
+        return post;
+      }),
+    }));
   };
 
   likePost = id => {
     this.setState(prevState => {
-      const newLiked = !prevState.liked;
-      const newLikes = newLiked ? prevState.likes + 1 : prevState.likes - 1;
+      const foundPost = prevState.posts.find(post => post.id === id);
+      const newLiked = !foundPost.liked;
+      const newLikes = newLiked ? foundPost.likes + 1 : foundPost.likes - 1;
       return {
-        liked: newLiked,
-        likes: newLikes,
+        posts: prevState.posts.map(post => {
+          if (post.id === id) {
+            const newPost = post;
+            newPost.liked = newLiked;
+            newPost.likes = newLikes;
+            return newPost;
+          }
+          return post;
+        }),
       };
     });
   };
@@ -115,6 +133,9 @@ class App extends React.Component {
         <SearchBar searchText={searchText} setSearch={this.setSearch} />
         <ComponentFromWithAuthenticate
           posts={posts}
+          addNewComment={this.addNewComment}
+          changeNewComment={this.changeNewComment}
+          likePost={this.likePost}
           onSubmit={this.onLoginDataSubmit}
           username={username}
           password={password}

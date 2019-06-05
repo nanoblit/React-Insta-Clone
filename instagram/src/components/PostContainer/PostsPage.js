@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PostContainer from './PostContainer';
 
-const PostsPage = ({ posts }) => (
+const PostsPage = ({
+  posts, addNewComment, changeNewComment, likePost,
+}) => (
   <div>
     {posts
       .filter(({ isShown }) => isShown)
       .map(({
-        username, thumbnailUrl, imageUrl, likes, timestamp, comments, id,
+        username, thumbnailUrl, imageUrl, likes, liked, newCommentText, timestamp, comments, id,
       }) => (
         <PostContainer
           key={id}
@@ -15,8 +17,14 @@ const PostsPage = ({ posts }) => (
           thumbnailUrl={thumbnailUrl}
           imageUrl={imageUrl}
           likes={likes}
+          liked={liked}
+          newCommentText={newCommentText}
           timestamp={timestamp}
           comments={comments}
+          id={id}
+          addNewComment={addNewComment}
+          changeNewComment={changeNewComment}
+          likePost={likePost}
         />
       ))}
   </div>
@@ -37,11 +45,13 @@ PostsPage.propTypes = {
           username: PropTypes.string.isRequired,
           text: PropTypes.string.isRequired,
           id: PropTypes.string.isRequired,
-          liked: PropTypes.bool.isRequired,
         }),
       ),
     }),
   ),
+  addNewComment: PropTypes.func.isRequired,
+  changeNewComment: PropTypes.func.isRequired,
+  likePost: PropTypes.func.isRequired,
 };
 
 PostsPage.defaultProps = {
