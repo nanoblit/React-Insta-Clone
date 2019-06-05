@@ -2,6 +2,7 @@ import React from 'react';
 import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostsPage from './components/PostContainer/PostsPage';
+import LoginPage from './components/Login/LoginPage';
 import withAuthenticate from './components/authentication/withAuthenticate';
 import GlobalStyles from './styles/default';
 import { AppDiv } from './styles/App';
@@ -12,6 +13,8 @@ class App extends React.Component {
   state = {
     posts: [],
     searchText: '',
+    username: '',
+    password: '',
   };
 
   componentDidMount() {
@@ -35,13 +38,41 @@ class App extends React.Component {
     }));
   };
 
+  authed = () => localStorage.getItem('auth') === 'User';
+
+  onLoginDataSubmit = e => {
+    e.preventDefault();
+    localStorage.setItem('auth', this.state.username);
+    this.setState({
+      username: '',
+      password: '',
+    });
+  };
+
+  onChange = (e, which) => {
+    this.setState({
+      [which]: e.target.value,
+    });
+  };
+
   render() {
-    const { posts, searchText } = this.state;
+    const {
+      posts, searchText, username, password,
+    } = this.state;
     return (
       <AppDiv>
         <GlobalStyles />
         <SearchBar searchText={searchText} setSearch={this.setSearch} />
-        <ComponentFromWithAuthenticate posts={posts} />
+        {this.authed() ? (
+          <ComponentFromWithAuthenticate posts={posts} />
+        ) : (
+          <LoginPage
+            onSubmit={this.onLoginDataSubmit}
+            username={username}
+            password={password}
+            onChange={this.onChange}
+          />
+        )}
       </AppDiv>
     );
   }
