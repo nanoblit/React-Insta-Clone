@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import uuid from 'uuid';
+import FuzzySearch from 'fuzzy-search';
 import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostsPage from './components/PostContainer/PostsPage';
@@ -15,6 +16,7 @@ const App = () => {
   const [searchText, setSearchText] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const searcher = new FuzzySearch(posts, ['username'], {});
 
   useEffect(() => {
     let dataToDisplay = JSON.parse(localStorage.getItem('posts'));
@@ -42,10 +44,11 @@ const App = () => {
   // SEARCH BAR CALLBACKS
   const setSearch = e => {
     e.persist();
+    const postsToShow = searcher.search(e.target.value);
     setPosts(
       posts.map(post => {
         const copyPost = post;
-        copyPost.isShown = copyPost.username.indexOf(e.target.value) > -1;
+        copyPost.isShown = !!postsToShow.find(({ id }) => post.id === id);
         return copyPost;
       }),
     );
