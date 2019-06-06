@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { gray, darkGray } from './variables';
 
 export const Post = styled.div`
-  width: 60rem;
+  max-width: 60rem;
   border: 0.1rem solid ${gray};
   border-radius: 0.5rem;
   margin-bottom: 2rem;
