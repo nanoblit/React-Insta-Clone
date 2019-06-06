@@ -7,8 +7,8 @@ const LoginPage = ({
   onSubmit, username, password, onChangeUsername, onChangePassword,
 }) => (
   <LoginForm onSubmit={onSubmit}>
-    <LoginInput onChange={onChangeUsername} value={username} placeholder="username" required />
-    <LoginInput onChange={onChangePassword} value={password} placeholder="password" required />
+    <LoginInput type="text" onChange={onChangeUsername} value={username} placeholder="username" required />
+    <LoginInput type="password" onChange={onChangePassword} value={password} placeholder="password" required />
     <Button type="submit">Login</Button>
   </LoginForm>
 );

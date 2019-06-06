@@ -38,7 +38,15 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('posts', JSON.stringify(posts));
+    const copiedPosts = JSON.parse(JSON.stringify(posts));
+
+    for (const post of copiedPosts) {
+      const changedPost = post;
+      changedPost.isShown = true;
+      changedPost.newCommentText = '';
+    }
+
+    localStorage.setItem('posts', JSON.stringify(copiedPosts));
   }, [posts]);
 
   // SEARCH BAR CALLBACKS
