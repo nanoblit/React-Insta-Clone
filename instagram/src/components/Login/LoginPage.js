@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LoginForm, LoginInput } from '../../styles/LoginPage';
+import { Button } from '../../styles/default';
 
 const LoginPage = ({
   onSubmit, username, password, onChangeUsername, onChangePassword,
 }) => (
-  <form onSubmit={onSubmit}>
-    <input onChange={onChangeUsername} value={username} placeholder="username" />
-    <input onChange={onChangePassword} value={password} placeholder="password" />
-    <button type="submit">Login</button>
-  </form>
+  <LoginForm onSubmit={onSubmit}>
+    <LoginInput onChange={onChangeUsername} value={username} placeholder="username" required />
+    <LoginInput onChange={onChangePassword} value={password} placeholder="password" required />
+    <Button type="submit">Login</Button>
+  </LoginForm>
 );
 
 LoginPage.propTypes = {

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { defaultText } from './default';
 import { gray, darkGray } from './variables';
 
 export const Post = styled.div`
@@ -23,7 +22,6 @@ export const Thumbnail = styled.img`
 `;
 
 export const Username = styled.span`
-  ${defaultText}
   font-weight: bold;
 `;
 
@@ -43,18 +41,28 @@ export const HeartIcon = styled(FontAwesomeIcon)`
 `;
 
 export const Likes = styled.span`
-  ${defaultText}
   display: inline-block;
   font-weight: bold;
 `;
 
 export const Timestamp = styled.span`
-  ${defaultText}
   display: inline-block;
   font-size: 1.2rem;
   color: ${darkGray};
 `;
 
 export const CommentsDiv = styled.div`
-  margin: 1.3rem;
+  margin: 0 1.3rem;
+  padding: 1.3rem 0;
+  border-bottom: 0.1rem solid ${gray};
+`;
+
+export const CommentInput = styled.input`
+  width: 100%;
+  padding: 1rem;
+  border: none;
+
+  ::placeholder {
+    color: ${darkGray};
+  }
 `;

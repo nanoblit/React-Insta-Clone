@@ -1,18 +1,7 @@
 import styled from 'styled-components';
-import { defaultText } from './default';
+import { Input } from './default';
 import { gray, lightGray, darkGray } from './variables';
 
-export const Search = styled.input`
-  ${defaultText}
-  color: ${darkGray};
-  text-align: center;
-  background-color: ${lightGray};
-  border: 0.1rem solid ${gray};
-  border-radius: 0.3rem;
+export const Search = styled(Input)`
   margin: 2rem 0;
-  padding: 0.2rem 0;
-
-  ::placeholder {
-    color: ${darkGray};
-  }
 `;

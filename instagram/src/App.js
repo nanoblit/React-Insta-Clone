@@ -17,20 +17,27 @@ const App = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    const dummyDataWithIsShown = dummyData.map(data => {
-      const changedData = data;
-      changedData.isShown = true;
-      changedData.id = uuid();
-      changedData.newCommentText = '';
-      changedData.liked = false;
-      for (const comment of changedData.comments) {
-        const changedComment = comment;
-        changedComment.id = uuid();
-      }
-      return changedData;
-    });
-    setPosts(dummyDataWithIsShown);
+    let dataToDisplay = JSON.parse(localStorage.getItem('posts'));
+    if (!dataToDisplay) {
+      dataToDisplay = dummyData.map(data => {
+        const changedData = data;
+        changedData.isShown = true;
+        changedData.id = uuid();
+        changedData.newCommentText = '';
+        changedData.liked = false;
+        for (const comment of changedData.comments) {
+          const changedComment = comment;
+          changedComment.id = uuid();
+        }
+        return changedData;
+      });
+    }
+    setPosts(dataToDisplay);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('posts', JSON.stringify(posts));
+  }, [posts]);
 
   // SEARCH BAR CALLBACKS
   const setSearch = e => {
@@ -46,7 +53,6 @@ const App = () => {
   };
 
   // LOGIN PAGE CALLBACKS
-
   const onLoginDataSubmit = e => {
     e.preventDefault();
     localStorage.setItem('auth', username);
@@ -68,7 +74,7 @@ const App = () => {
     const { newCommentText } = posts.find(post => post.id === id);
 
     const newComment = {
-      username: 'User',
+      username: localStorage.getItem('auth'),
       text: newCommentText,
       id: uuid(),
     };

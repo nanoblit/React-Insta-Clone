@@ -13,6 +13,7 @@ import {
   CommentsDiv,
   HeartIcon,
   LikesDiv,
+  CommentInput,
 } from '../../styles/PostContainer';
 
 const PostContainer = ({
@@ -44,7 +45,7 @@ const PostContainer = ({
       <Timestamp>{timestamp}</Timestamp>
     </CommentsDiv>
     <form onSubmit={e => addNewComment(e, id)}>
-      <input value={newCommentText} onChange={e => changeNewComment(e, id)} />
+      <CommentInput type="text" placeholder="Add a comment..." value={newCommentText} onChange={e => changeNewComment(e, id)} />
     </form>
   </Post>
 );
