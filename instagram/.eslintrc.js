@@ -32,6 +32,8 @@ module.exports = {
     "import/prefer-default-export": 0,
     "react/destructuring-assignment": 0,
     "react/no-unused-prop-types": 0,
-    "no-unused-vars": 1
+    "no-unused-vars": 1,
+    "react/prefer-stateless-function": 1,
+    "no-restricted-syntax": 0
   }
 };
