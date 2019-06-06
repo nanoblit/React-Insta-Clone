@@ -38,7 +38,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const copiedPosts = JSON.parse(JSON.stringify(posts));
+    const copiedPosts = [...posts];
 
     for (const post of copiedPosts) {
       const changedPost = post;
