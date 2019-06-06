@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import uuid from 'uuid';
 import dummyData from './dummy-data';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -10,15 +10,13 @@ import { AppDiv } from './styles/App';
 
 const ComponentFromWithAuthenticate = withAuthenticate(PostsPage)(LoginPage);
 
-class App extends React.Component {
-  state = {
-    posts: [],
-    searchText: '',
-    username: '',
-    password: '',
-  };
+const App = () => {
+  const [posts, setPosts] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     const dummyDataWithIsShown = dummyData.map(data => {
       const changedData = data;
       changedData.isShown = true;
@@ -31,44 +29,42 @@ class App extends React.Component {
       }
       return changedData;
     });
-    this.setState({ posts: dummyDataWithIsShown });
-  }
+    setPosts(dummyDataWithIsShown);
+  }, []);
 
   // SEARCH BAR CALLBACKS
-  setSearch = e => {
+  const setSearch = e => {
     e.persist();
-    this.setState(prevState => ({
-      posts: prevState.posts.map(post => {
+    setPosts(
+      posts.map(post => {
         const copyPost = post;
         copyPost.isShown = copyPost.username.indexOf(e.target.value) > -1;
         return copyPost;
       }),
-      searchText: e.target.value,
-    }));
+    );
+    setSearchText(e.target.value);
   };
 
   // LOGIN PAGE CALLBACKS
 
-  onLoginDataSubmit = e => {
+  const onLoginDataSubmit = e => {
     e.preventDefault();
-    localStorage.setItem('auth', this.state.username);
-    this.setState({
-      username: '',
-      password: '',
-    });
+    localStorage.setItem('auth', username);
+    setUsername('');
+    setPassword('');
   };
 
-  onChange = (e, which) => {
-    this.setState({
-      [which]: e.target.value,
-    });
+  const onChangeUsername = e => {
+    setUsername(e.target.value);
+  };
+
+  const onChangePassword = e => {
+    setPassword(e.target.value);
   };
 
   // POST CONTAINER CALLBACKS
-  addNewComment = (e, id) => {
+  const addNewComment = (e, id) => {
     e.preventDefault();
-
-    const { posts } = this.state;
     const { newCommentText } = posts.find(post => post.id === id);
 
     const newComment = {
@@ -77,8 +73,8 @@ class App extends React.Component {
       id: uuid(),
     };
 
-    this.setState(prevState => ({
-      posts: prevState.posts.map(post => {
+    setPosts(
+      posts.map(post => {
         if (post.id === id) {
           const newPost = post;
           newPost.newCommentText = '';
@@ -87,13 +83,13 @@ class App extends React.Component {
         }
         return post;
       }),
-    }));
+    );
   };
 
-  changeNewComment = (e, id) => {
+  const changeNewComment = (e, id) => {
     e.persist();
-    this.setState(prevState => ({
-      posts: prevState.posts.map(post => {
+    setPosts(
+      posts.map(post => {
         if (post.id === id) {
           const newPost = post;
           newPost.newCommentText = e.target.value;
@@ -101,49 +97,44 @@ class App extends React.Component {
         }
         return post;
       }),
-    }));
-  };
-
-  likePost = id => {
-    this.setState(prevState => {
-      const foundPost = prevState.posts.find(post => post.id === id);
-      const newLiked = !foundPost.liked;
-      const newLikes = newLiked ? foundPost.likes + 1 : foundPost.likes - 1;
-      return {
-        posts: prevState.posts.map(post => {
-          if (post.id === id) {
-            const newPost = post;
-            newPost.liked = newLiked;
-            newPost.likes = newLikes;
-            return newPost;
-          }
-          return post;
-        }),
-      };
-    });
-  };
-
-  render() {
-    const {
-      posts, searchText, username, password,
-    } = this.state;
-    return (
-      <AppDiv>
-        <GlobalStyles />
-        <SearchBar searchText={searchText} setSearch={this.setSearch} />
-        <ComponentFromWithAuthenticate
-          posts={posts}
-          addNewComment={this.addNewComment}
-          changeNewComment={this.changeNewComment}
-          likePost={this.likePost}
-          onSubmit={this.onLoginDataSubmit}
-          username={username}
-          password={password}
-          onChange={this.onChange}
-        />
-      </AppDiv>
     );
-  }
-}
+  };
+
+  const likePost = id => {
+    const foundPost = posts.find(post => post.id === id);
+    const newLiked = !foundPost.liked;
+    const newLikes = newLiked ? foundPost.likes + 1 : foundPost.likes - 1;
+
+    setPosts(
+      posts.map(post => {
+        if (post.id === id) {
+          const newPost = post;
+          newPost.liked = newLiked;
+          newPost.likes = newLikes;
+          return newPost;
+        }
+        return post;
+      }),
+    );
+  };
+
+  return (
+    <AppDiv>
+      <GlobalStyles />
+      <SearchBar searchText={searchText} setSearch={setSearch} />
+      <ComponentFromWithAuthenticate
+        posts={posts}
+        addNewComment={addNewComment}
+        changeNewComment={changeNewComment}
+        likePost={likePost}
+        onSubmit={onLoginDataSubmit}
+        username={username}
+        password={password}
+        onChangeUsername={onChangeUsername}
+        onChangePassword={onChangePassword}
+      />
+    </AppDiv>
+  );
+};
 
 export default App;

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const LoginPage = ({
-  onSubmit, username, password, onChange,
+  onSubmit, username, password, onChangeUsername, onChangePassword,
 }) => (
   <form onSubmit={onSubmit}>
-    <input onChange={e => onChange(e, 'username')} value={username} placeholder="username" />
-    <input onChange={e => onChange(e, 'password')} value={password} placeholder="password" />
+    <input onChange={onChangeUsername} value={username} placeholder="username" />
+    <input onChange={onChangePassword} value={password} placeholder="password" />
     <button type="submit">Login</button>
   </form>
 );
@@ -15,7 +15,8 @@ LoginPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChangeUsername: PropTypes.func.isRequired,
+  onChangePassword: PropTypes.func.isRequired,
 };
 
 export default LoginPage;
