@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import logo from '../../img/logo.png';
 import right from '../../img/right.png';
 import {
-  SearchDiv, Search, LogoImg, RightImg,
-} from '../../styles/SerachBar';
+  SearchDiv, Search, SearchInputDiv, LogoImg, RightImg,
+} from '../../styles/SearchBar';
 
 function SearchBar({ setSearch, searchText }) {
   return (
     <SearchDiv>
       <LogoImg src={logo} alt="logo" />
-      <Search onChange={setSearch} value={searchText} placeholder="Search" type="text" />
+      <SearchInputDiv>
+        <Search onChange={setSearch} value={searchText} placeholder="Search" type="text" />
+      </SearchInputDiv>
       <RightImg src={right} alt="icons" />
     </SearchDiv>
   );

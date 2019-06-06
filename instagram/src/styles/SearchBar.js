@@ -8,8 +8,13 @@ export const SearchDiv = styled.div`
   align-items: center;
 `;
 
+export const SearchInputDiv = styled.div`
+  margin: 2rem 1rem;
+  max-width: 19.4rem;
+`;
+
 export const Search = styled(Input)`
-  margin: 2rem 0;
+  width: 100%;
 `;
 
 export const LogoImg = styled.img`
@@ -18,4 +23,8 @@ export const LogoImg = styled.img`
 
 export const RightImg = styled.img`
   height: 2rem;
+
+  @media screen and (max-width: 490px) {
+    display: none;
+  }
 `;
