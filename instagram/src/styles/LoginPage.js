@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Input } from './default';
-import { gray, darkGray } from './variables';
 
 export const LoginForm = styled.form`
   display: flex;
