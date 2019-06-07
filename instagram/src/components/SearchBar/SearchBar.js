@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Search } from '../../styles/SerachBar';
+import logo from '../../img/logo.png';
+import right from '../../img/right.png';
+import {
+  SearchDiv, Search, SearchInputDiv, LogoImg, RightImg,
+} from '../../styles/SearchBar';
 
 function SearchBar({ setSearch, searchText }) {
   return (
-    <div>
-      <Search onChange={setSearch} value={searchText} placeholder="Search" type="text" />
-    </div>
+    <SearchDiv>
+      <LogoImg src={logo} alt="logo" />
+      <SearchInputDiv>
+        <Search onChange={setSearch} value={searchText} placeholder="Search" type="text" />
+      </SearchInputDiv>
+      <RightImg src={right} alt="icons" />
+    </SearchDiv>
   );
 }
 

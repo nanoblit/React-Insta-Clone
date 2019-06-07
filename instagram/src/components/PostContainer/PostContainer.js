@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import CommentSection from '../CommentSection/CommentSection';
 import {
@@ -14,51 +13,42 @@ import {
   CommentsDiv,
   HeartIcon,
   LikesDiv,
+  CommentInput,
 } from '../../styles/PostContainer';
 
-class PostContainer extends React.Component {
-  render() {
-    const {
-      username,
-      thumbnailUrl,
-      imageUrl,
-      timestamp,
-      comments,
-      newCommentText,
-      likes,
-      liked,
-      addNewComment,
-      changeNewComment,
-      likePost,
-      id,
-    } = this.props;
-    return (
-      <Post>
-        <Header>
-          <Thumbnail src={thumbnailUrl} alt="an avatar" />
-          <Username>{username}</Username>
-        </Header>
-        <PostImage src={imageUrl} alt="an image" />
-        <CommentsDiv>
-          <LikesDiv>
-            <HeartIcon
-              liked={liked ? 1 : 0}
-              onClick={() => likePost(id)}
-              icon={faHeart}
-              size="2x"
-            />
-            <Likes>{likes} likes</Likes>
-          </LikesDiv>
-          <CommentSection comments={comments} />
-          <Timestamp>{timestamp}</Timestamp>
-        </CommentsDiv>
-        <form onSubmit={e => addNewComment(e, id)}>
-          <input value={newCommentText} onChange={e => changeNewComment(e, id)} />
-        </form>
-      </Post>
-    );
-  }
-}
+const PostContainer = ({
+  username,
+  thumbnailUrl,
+  imageUrl,
+  timestamp,
+  comments,
+  newCommentText,
+  likes,
+  liked,
+  addNewComment,
+  changeNewComment,
+  likePost,
+  id,
+}) => (
+  <Post>
+    <Header>
+      <Thumbnail src={thumbnailUrl} alt="an avatar" />
+      <Username>{username}</Username>
+    </Header>
+    <PostImage src={imageUrl} alt="an image" />
+    <CommentsDiv>
+      <LikesDiv>
+        <HeartIcon liked={liked ? 1 : 0} onClick={() => likePost(id)} icon={faHeart} size="2x" />
+        <Likes>{likes} likes</Likes>
+      </LikesDiv>
+      <CommentSection comments={comments} />
+      <Timestamp>{timestamp}</Timestamp>
+    </CommentsDiv>
+    <form onSubmit={e => addNewComment(e, id)}>
+      <CommentInput type="text" placeholder="Add a comment..." value={newCommentText} onChange={e => changeNewComment(e, id)} />
+    </form>
+  </Post>
+);
 
 PostContainer.propTypes = {
   username: PropTypes.string.isRequired,

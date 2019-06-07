@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { defaultText } from './default';
 
 export const CommentText = styled.p`
-  ${defaultText}
   margin-bottom: 0.8rem;
 `;
 

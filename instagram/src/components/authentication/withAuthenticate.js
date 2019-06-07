@@ -8,7 +8,7 @@ const withAuthenticate = Login => Posts => class extends React.Component {
     authed = () => localStorage.getItem('auth');
 
     render() {
-      if (this.authed() !== undefined) {
+      if (this.authed() !== null) {
         return <Login {...this.props} />;
       }
       return <Posts {...this.props} />;
