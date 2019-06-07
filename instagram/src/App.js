@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 import PostsPage from './components/PostContainer/PostsPage';
 import LoginPage from './components/Login/LoginPage';
 import withAuthenticate from './components/authentication/withAuthenticate';
+import GlobalStyles from './styles/default';
 import { AppDiv } from './styles/App';
 
 const ComponentFromWithAuthenticate = withAuthenticate(PostsPage)(LoginPage);
@@ -136,6 +137,7 @@ const App = () => {
 
   return (
     <AppDiv>
+      <GlobalStyles />
       <SearchBar searchText={searchText} setSearch={setSearch} />
       <ComponentFromWithAuthenticate
         posts={posts}
